@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen = ({ route }) => {
     const { token, groupId } = route.params;
@@ -38,7 +38,7 @@ const HomeScreen = ({ route }) => {
     //const go = function (item){navigation.navigate('Detail', item)}
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity onPress={() => { navigation.navigate('Detail', { item, ${token}}) }}>
+        <TouchableOpacity onPress={() => { navigation.navigate('Detail', { item, token}) }}>
             <View style={styles.item}>
                 <Text style={styles.title}>{item.nickName}</Text>
                 <Text>Model: {item.model}</Text>

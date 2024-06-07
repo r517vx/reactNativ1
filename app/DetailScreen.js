@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 
 const DetailScreen = ({ route }) => {
@@ -9,9 +9,9 @@ const DetailScreen = ({ route }) => {
     const navigation = useNavigation();
     console.log("DetailScreen.item:");
     console.log(item);
-    const {token} = route.param;
+    const {token} = route.params;
     console.log("DetailScreen.token:");
-    console.log(item);
+    console.log(token);
 
 
     return (
