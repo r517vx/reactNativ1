@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 
-const DetailScreen = ({ route }) => {
+const DetailScreen = ({route}) => {
     //console.log("DetailScreen.route.param:");
     //console.log(route.params);
-    const { item } = route.params;
+    const {item} = route.params;
     const navigation = useNavigation();
     //console.log("DetailScreen.item:");
     //console.log(item);
@@ -54,6 +54,10 @@ const DetailScreen = ({ route }) => {
         return () => clearInterval(intervalId);
     }, [token]);
 
+    const startCharge = () => {
+    }
+    const stopCharge = () => {
+    }
 
     return (
         <View style={styles.container}>
@@ -65,8 +69,11 @@ const DetailScreen = ({ route }) => {
             <Text>Heartbeat: {item.heartbeat}</Text>
             <Text>Address: {item.address}</Text>
             <Text>Address CS: {item.addressCs}</Text>
-            { data ? (<Text style={styles.title}>Connector status: {data[0]?.status}</Text>) : (<Text>No data</Text>)}
-
+            {data ? (<Text style={styles.title}>Connector status: {data[0]?.status}</Text>) : (<Text>No data</Text>)}
+            <View style={styles.buttonContainer}>
+                <Button title="Start" onPress={startCharge} />
+                <Button title="Stop" onPress={stopCharge} />
+            </View>
 
             {/*<Button title={'Go forward >>>'}  onPress={navigation.navigate('ConnectorScreen', {item} )}/>*/}
         </View>
@@ -87,6 +94,11 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 16,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '50%'
     },
 });
 

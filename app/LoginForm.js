@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Button } from 'react-native';
+import React, {useState} from 'react';
+import {Button, StyleSheet, TextInput, View} from 'react-native';
 import Toast from 'react-native-toast-message';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -11,6 +11,7 @@ const LoginForm = () => {
     const handleLogin = async () => {
         try {
             const response = await fetch('http://94.228.117.74:10023/pss/api/v1/auth/authenticate', {
+           // const response = await fetch('http://10.10.254.14:10023/pss/api/v1/auth/authenticate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,6 +65,7 @@ const LoginForm = () => {
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
+                autoCapitalize="none"
             />
             <Button title="Login" onPress={handleLogin} />
             <Toast />
