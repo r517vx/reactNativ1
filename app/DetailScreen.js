@@ -16,6 +16,8 @@ const DetailScreen = ({route}) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    let result;
+
     useEffect(() => {
         let intervalId;
 
@@ -33,7 +35,7 @@ const DetailScreen = ({route}) => {
                     throw new Error('Network response was not ok');
                 }
 
-                const result = await response.json();
+                result = await response.json();
                 setData(result);
                 console.log("Fetched connector status: ");
                 console.log(result);
@@ -55,8 +57,58 @@ const DetailScreen = ({route}) => {
     }, [token]);
 
     const startCharge = () => {
+        const fetchData = async () => {
+            try { //    http://94.228.117.74:10023/pss/api/v1/table/get
+                console.log("Start charge")
+                const response = await fetch(`http://94.228.117.74:10023/pss/api/v1/event/start?sn=${item.sn}&connectorId=1&limit=1200`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const result = await response.json();
+                console.log("Result on start command");
+                console.log(result);
+                setData(result.content);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
     }
     const stopCharge = () => {
+        const fetchData = async () => {
+            try { //    http://94.228.117.74:10023/pss/api/v1/table/get
+                console.log("Stop charge")
+                const response = await fetch(`http://94.228.117.74:10023/pss/api/v1/event/stop?sn=${item.sn}&connectorId=1&limit=1200`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const result = await response.json();
+                console.log("Result on stop command");
+                console.log(result);
+                setData(result.content);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
     }
 
     return (
