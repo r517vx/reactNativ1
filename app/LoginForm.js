@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, TextInput, View} from 'react-native';
+import {Button, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
 
+// Тестовая страница регистрации, в навигационном стеке не используется
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -39,7 +40,7 @@ const LoginForm = () => {
             });
 
             // Переход к следующему экрану
-            navigation.navigate('Home', { token: token, groupId: groupId });
+            navigation.navigate('Home', {token: token, groupId: groupId});
         } catch (error) {
             console.log(error.message);
             Toast.show({
@@ -48,6 +49,10 @@ const LoginForm = () => {
                 text2: error.message,
             });
         }
+    };
+
+    const handleRegisterPress = () => {
+        navigation.navigate('RegisterStepOne');
     };
 
     return (
@@ -67,8 +72,11 @@ const LoginForm = () => {
                 secureTextEntry
                 autoCapitalize="none"
             />
-            <Button title="Login" onPress={handleLogin} />
-            <Toast />
+            <Button title="Login" onPress={handleLogin}/>
+            <TouchableOpacity onPress={handleRegisterPress}>
+                <Text style={styles.registerText}>Register</Text>
+            </TouchableOpacity>
+            <Toast/>
         </View>
     );
 };
@@ -87,6 +95,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
+    },
+    registerText: {
+        marginTop: 50,
+        color: '#007BFF',
+        textDecorationLine: 'underline',
     },
 });
 
