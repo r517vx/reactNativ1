@@ -14,12 +14,12 @@ const RegisterStepTwo = () => {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const {name, email, phone, password} = route.params;
+    const {name: username, email: mail, phone, password} = route.params;
 
     const handleContinue = async () => {
         const registrationData = {
-            name,
-            email,
+            username: username,
+            mail: mail,
             phone,
             password,
             birthDate: birthDate.toISOString().split('T')[0], // Преобразуем дату в формат YYYY-MM-DD
@@ -28,7 +28,7 @@ const RegisterStepTwo = () => {
         };
 
         try {
-            const response = await fetch('https://example.com/api/register', {
+            const response = await fetch('http://94.228.117.74:10023/pss/api/v1/registration/registration-mobile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,9 +54,15 @@ const RegisterStepTwo = () => {
     };
 
     const onDateChange = (event, selectedDate) => {
-        const currentDate = selectedDate || birthDate;
-        setShowDatePicker(false);
-        setBirthDate(currentDate);
+        if (Platform.OS === 'ios') {
+            // iOS specific handling
+            setShowDatePicker(false);
+            setBirthDate(selectedDate || birthDate);
+        } else {
+            const currentDate = selectedDate || birthDate;
+            setShowDatePicker(false);
+            setBirthDate(currentDate);
+        }
     };
 
     return (
@@ -86,6 +92,7 @@ const RegisterStepTwo = () => {
                             display="default"
                             onChange={onDateChange}
                             maximumDate={new Date()} // Опционально: установка максимальной даты на сегодня
+                            onTouchCancel={() => setShowDatePicker(false)} // Close picker when touching outside
                         />
                     )}
                 </>
