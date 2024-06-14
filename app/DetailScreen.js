@@ -57,10 +57,21 @@ const DetailScreen = ({route}) => {
     }, [token]);
 
     const startCharge = () => {
+
+        function connId() {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].connectorId !== "0") {
+                    return data[i].connectorId;
+                }
+            }
+        }
+
+
         const fetchData = async () => {
             try { //    http://94.228.117.74:10023/pss/api/v1/table/get
-                console.log("Start charge")
-                const response = await fetch(`http://94.228.117.74:10023/pss/api/v1/event/start?sn=${item.sn}&connectorId=1&limit=1200`, {
+                console.log("Start charge");
+                console.log(`http://94.228.117.74:10023/pss/api/v1/event/start?sn=${item.sn}&connectorId=${connId()}&limit=1200`);
+                const response = await fetch(`http://94.228.117.74:10023/pss/api/v1/event/start?sn=${item.sn}&connectorId=${connId()}&limit=1200`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -86,8 +97,9 @@ const DetailScreen = ({route}) => {
     const stopCharge = () => {
         const fetchData = async () => {
             try { //    http://94.228.117.74:10023/pss/api/v1/table/get
-                console.log("Stop charge")
-                const response = await fetch(`http://94.228.117.74:10023/pss/api/v1/event/stop?sn=${item.sn}&connectorId=1&limit=1200`, {
+                console.log("Stop charge");
+                console.log(`http://94.228.117.74:10023/pss/api/v1/event/stop?sn=${item.sn}&connectorId=${data[0]?.connectorId}&limit=1200`);
+                const response = await fetch(`http://94.228.117.74:10023/pss/api/v1/event/stop?sn=${item.sn}&connectorId=${data[0]?.connectorId}&limit=1200`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -123,8 +135,8 @@ const DetailScreen = ({route}) => {
             <Text>Address CS: {item.addressCs}</Text>
             {data ? (<Text style={styles.title}>Connector status: {data[0]?.status}</Text>) : (<Text>No data</Text>)}
             <View style={styles.buttonContainer}>
-                <Button title="Start" onPress={startCharge} />
-                <Button title="Stop" onPress={stopCharge} />
+                <Button title="Start" onPress={startCharge}/>
+                <Button title="Stop" onPress={stopCharge}/>
             </View>
 
             {/*<Button title={'Go forward >>>'}  onPress={navigation.navigate('ConnectorScreen', {item} )}/>*/}
