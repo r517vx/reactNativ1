@@ -31,6 +31,8 @@ const LoginForm = () => {
             const data = await response.json();
             const token = data.token;
             const groupId = data.groupId;
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('groupId', data.groupId);
 
             Toast.show({
                 type: 'success',

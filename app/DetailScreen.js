@@ -135,8 +135,8 @@ const DetailScreen = ({route}) => {
             <Text>Address CS: {item.addressCs}</Text>
             {data ? (<Text style={styles.title}>Connector status: {data[0]?.status}</Text>) : (<Text>No data</Text>)}
             <View style={styles.buttonContainer}>
-                <Button title="Start" onPress={startCharge}/>
-                <Button title="Stop" onPress={stopCharge}/>
+                <Button title="Start" onPress={startCharge} disabled={!data || data.length === 0}/>
+                <Button title="Stop" onPress={stopCharge} disabled={!data || data.length === 0}/>
             </View>
 
             {/*<Button title={'Go forward >>>'}  onPress={navigation.navigate('ConnectorScreen', {item} )}/>*/}

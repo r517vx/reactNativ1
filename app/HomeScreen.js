@@ -8,6 +8,7 @@ const HomeScreen = ({ route }) => {
     const navigation = useNavigation();
 
     useEffect(() => {
+        console.log(`from local storage: ${localStorage.getItem('token')}, and groupId: ${localStorage.getItem('groupId')}`);
         const fetchData = async () => {
             try { //    http://94.228.117.74:10023/pss/api/v1/table/get
                 console.log("Start download station list")
