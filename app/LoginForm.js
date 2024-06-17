@@ -1,18 +1,22 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from "./AuthContext";
 
 // Тестовая страница регистрации, в навигационном стеке не используется
 const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
+    const {setToken} = useContext(AuthContext);
+
 
     const handleLogin = async () => {
+
         try {
             const response = await fetch('http://94.228.117.74:10023/pss/api/v1/auth/authenticate', {
-           // const response = await fetch('http://10.10.254.14:10023/pss/api/v1/auth/authenticate', {
+                // const response = await fetch('http://10.10.254.14:10023/pss/api/v1/auth/authenticate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,6 +37,9 @@ const LoginForm = () => {
             const groupId = data.groupId;
             localStorage.setItem('token', data.token);
             localStorage.setItem('groupId', data.groupId);
+            localStorage.setItem('allObj', JSON.stringify(data));
+            setToken(data.token);
+            debugger;
 
             Toast.show({
                 type: 'success',
