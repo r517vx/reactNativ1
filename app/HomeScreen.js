@@ -3,18 +3,17 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from "./AuthContext";
 
-const HomeScreen = ({ route }) => {
-    const { token, groupId } = route.params;
+const HomeScreen = ({route}) => {
+    const {token, groupId} = route.params;
     const [data, setData] = useState([]);
     const navigation = useNavigation();
-    const {tkn} = useContext(AuthContext);
+    const tkn = useContext(AuthContext);
 
     useEffect(() => {
-        console.log(`from local storage: ${localStorage.getItem('token')}, 
-        and groupId: ${localStorage.getItem('groupId')}, 
-        and allObj ${localStorage.getItem('allObj')}`);
-        console.log(`token from context ${tkn}`);
-        debugger;
+        //console.log(`from local storage: ${localStorage.getItem('token')},
+        //and groupId: ${localStorage.getItem('groupId')},
+        //and allObj ${localStorage.getItem('allObj')}`);
+        console.log(`token from context ${tkn.token}`);
         const fetchData = async () => {
             try { //    http://94.228.117.74:10023/pss/api/v1/table/get
                 console.log("Start download station list")
@@ -40,12 +39,15 @@ const HomeScreen = ({ route }) => {
         };
 
         fetchData();
+
     }, [tkn]);
 
     //const go = function (item){navigation.navigate('Detail', item)}
 
-    const renderItem = ({ item }) => (
-        <TouchableOpacity onPress={() => { navigation.navigate('Detail', { item, token}) }}>
+    const renderItem = ({item}) => (
+        <TouchableOpacity onPress={() => {
+            navigation.navigate('Detail', {item, token})
+        }}>
             <View style={styles.item}>
                 <Text style={styles.title}>{item.nickName}</Text>
                 <Text>Model: {item.model}</Text>

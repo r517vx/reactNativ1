@@ -12,6 +12,7 @@ const LoginForm = () => {
     const {setToken} = useContext(AuthContext);
 
 
+
     const handleLogin = async () => {
 
         try {
@@ -35,11 +36,10 @@ const LoginForm = () => {
             const data = await response.json();
             const token = data.token;
             const groupId = data.groupId;
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('groupId', data.groupId);
-            localStorage.setItem('allObj', JSON.stringify(data));
+            //localStorage.setItem('token', data.token);
+            //localStorage.setItem('groupId', data.groupId);
+            //localStorage.setItem('allObj', JSON.stringify(data));
             setToken(data.token);
-            debugger;
 
             Toast.show({
                 type: 'success',
